@@ -206,9 +206,7 @@ async function realizarLogin(event) {
     const senha = document.getElementById('senha').value;
 
     if (tipo === 'rh') {
-        if (iden.includes('@prefeituraresende.com') && senha === "admin123") window.location.href = '/rhgit add .
-git commit -m "Finalizando rotas sem extensao html"
-git push origin main';
+        if (iden.includes('@prefeituraresende.com') && senha === "admin123") window.location.href = '/rh';
         else alert("Erro no login RH!");
     } else {
         const { data: func } = await _supabase.from('funcionarios').select('*').eq('matricula', iden).eq('senha', senha).maybeSingle();
@@ -278,14 +276,21 @@ async function excluirFolha(id) {
     }
 }
 
-// INICIALIZAÇÃO
+// INICIALIZAÇÃO SEGURA
 document.addEventListener('DOMContentLoaded', async () => {
+    // Carrega dados básicos (o que for comum ou tiver proteção interna)
     await atualizarSelectFuncionarios();
     await renderizarListaGestao();
     await renderizarHistoricoFolhas(); 
     await preencherHoleriteReal();
     
-    document.getElementById('form-cadastro')?.addEventListener('submit', cadastrarFuncionario);
-    document.getElementById('form-lancamento')?.addEventListener('submit', lancarFolha);
-    document.querySelector('.login-form')?.addEventListener('submit', realizarLogin);
+    // Captura os formulários
+    const formCadastro = document.getElementById('form-cadastro');
+    const formLancamento = document.getElementById('form-lancamento');
+    const formLogin = document.getElementById('form-login'); // Usei o ID que está no seu HTML
+
+    // Só adiciona o evento se o formulário existir na página
+    if (formCadastro) formCadastro.addEventListener('submit', cadastrarFuncionario);
+    if (formLancamento) formLancamento.addEventListener('submit', lancarFolha);
+    if (formLogin) formLogin.addEventListener('submit', realizarLogin);
 });
