@@ -99,7 +99,7 @@ async function lancarFolha(event) {
     }
 }
 
-// 5. GESTÃO E EDIÇÃO (CORRIGIDO)
+// 5. GESTÃO E EDIÇÃO
 async function prepararEdicao(id) {
     const { data: func } = await _supabase.from('funcionarios').select('*').eq('id', id).single();
     if (!func) return;
@@ -167,7 +167,7 @@ async function renderizarHistoricoFolhas() {
 
     let sBruto = 0, sInss = 0, sLiq = 0;
     const filtradas = folhas.filter(folha => {
-        const nMatch = folha.funcionarios?.nome.toLowerCase().includes(buscaNome);
+        const nMatch = (folha.funcionarios?.nome || "").toLowerCase().includes(buscaNome);
         const mMatch = filtroMes === "" || folha.mes_referencia === filtroMes;
         return nMatch && mMatch;
     });
@@ -191,11 +191,12 @@ async function renderizarHistoricoFolhas() {
 }
 
 function atualizarExibicaoTotais(bruto, inss, liquido) {
-    if (document.getElementById('total-bruto-geral')) {
-        document.getElementById('total-bruto-geral').textContent = `R$ ${bruto.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
-        document.getElementById('total-inss-geral').textContent = `R$ ${inss.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
-        document.getElementById('total-liquido-geral').textContent = `R$ ${liquido.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
-    }
+    const b = document.getElementById('total-bruto-geral');
+    const i = document.getElementById('total-inss-geral');
+    const l = document.getElementById('total-liquido-geral');
+    if (b) b.textContent = `R$ ${bruto.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+    if (i) i.textContent = `R$ ${inss.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+    if (l) l.textContent = `R$ ${liquido.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
 }
 
 // 6. LOGIN E HOLERITE
@@ -206,8 +207,9 @@ async function realizarLogin(event) {
     const senha = document.getElementById('senha').value;
 
     if (tipo === 'rh') {
-        if (iden.includes('@prefeituraresende.com') && senha === "admin123") window.location.href = '/index';
-        else alert("Erro no login RH!");
+        if (iden.includes('@prefeituraresende.com') && senha === "admin123") {
+            window.location.href = '/rh';
+        } else alert("Erro no login RH!");
     } else {
         const { data: func } = await _supabase.from('funcionarios').select('*').eq('matricula', iden).eq('senha', senha).maybeSingle();
         if (func) {
@@ -225,21 +227,12 @@ async function preencherHoleriteReal() {
     const { data: usuario } = await _supabase.from('funcionarios').select('*').eq('id', usuarioID).single();
     const { data: folhas } = await _supabase.from('folhas').select('*').eq('funcionario_id', usuarioID).order('mes_referencia');
 
-    const selectMes = document.getElementById('escolher-mes-holerite');
-    if (selectMes && selectMes.options.length === 0 && folhas && folhas.length > 0) {
-        folhas.forEach(f => {
-            const opt = new Option(f.mes_referencia, f.mes_referencia);
-            selectMes.add(opt);
-        });
-    }
-
-    const folha = folhas?.find(f => f.mes_referencia === selectMes?.value) || (folhas ? folhas[folhas.length - 1] : null);
-    
     if (usuario) {
         document.getElementById('dados-servidor').innerHTML = `<p><strong>Nome:</strong> ${usuario.nome} | <strong>Matrícula:</strong> ${usuario.matricula}</p><p><strong>Cargo:</strong> ${usuario.cargo}</p>`;
     }
 
-    if (folha) {
+    if (folhas && folhas.length > 0) {
+        const folha = folhas[folhas.length - 1];
         document.getElementById('ref-mes').textContent = folha.mes_referencia;
         corpo.innerHTML = `
             <tr><td>Salário Base</td><td>${folha.horas_normais}h</td><td>R$ ${folha.ganho_normal}</td><td>-</td></tr>
@@ -276,21 +269,22 @@ async function excluirFolha(id) {
     }
 }
 
-// INICIALIZAÇÃO SEGURA
+// INICIALIZAÇÃO
 document.addEventListener('DOMContentLoaded', async () => {
-    // Carrega dados básicos (o que for comum ou tiver proteção interna)
-    await atualizarSelectFuncionarios();
-    await renderizarListaGestao();
-    await renderizarHistoricoFolhas(); 
-    await preencherHoleriteReal();
+    // Carregamento inteligente por página
+    if (document.getElementById('form-login')) {
+        document.getElementById('form-login').addEventListener('submit', realizarLogin);
+    }
     
-    // Captura os formulários
-    const formCadastro = document.getElementById('form-cadastro');
-    const formLancamento = document.getElementById('form-lancamento');
-    const formLogin = document.getElementById('form-login'); // Usei o ID que está no seu HTML
-
-    // Só adiciona o evento se o formulário existir na página
-    if (formCadastro) formCadastro.addEventListener('submit', cadastrarFuncionario);
-    if (formLancamento) formLancamento.addEventListener('submit', lancarFolha);
-    if (formLogin) formLogin.addEventListener('submit', realizarLogin);
+    if (document.getElementById('form-cadastro')) {
+        await atualizarSelectFuncionarios();
+        await renderizarListaGestao();
+        await renderizarHistoricoFolhas();
+        document.getElementById('form-cadastro').addEventListener('submit', cadastrarFuncionario);
+        document.getElementById('form-lancamento').addEventListener('submit', lancarFolha);
+    }
+    
+    if (document.getElementById('corpo-tabela')) {
+        await preencherHoleriteReal();
+    }
 });

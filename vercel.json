@@ -1,9 +1,7 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false,
   "rewrites": [
     { "source": "/rh", "destination": "/rh.html" },
-    { "source": "/holerite", "destination": "/holerite.html" },
-    { "source": "/login", "destination": "/index.html" }
+    { "source": "/holerite", "destination": "/holerite.html" }
   ]
 }
