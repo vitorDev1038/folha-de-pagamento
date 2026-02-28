@@ -222,17 +222,39 @@ async function realizarLogin(event) {
 async function preencherHoleriteReal() {
     const usuarioID = localStorage.getItem('usuarioLogadoID');
     const corpo = document.getElementById('corpo-tabela');
-    if (!usuarioID || !corpo) return;
+    const selectMes = document.getElementById('escolher-mes-holerite');
+    
+    if (!usuarioID || !corpo || !selectMes) return;
 
+    // Busca dados do funcionário
     const { data: usuario } = await _supabase.from('funcionarios').select('*').eq('id', usuarioID).single();
-    const { data: folhas } = await _supabase.from('folhas').select('*').eq('funcionario_id', usuarioID).order('mes_referencia');
-
     if (usuario) {
         document.getElementById('dados-servidor').innerHTML = `<p><strong>Nome:</strong> ${usuario.nome} | <strong>Matrícula:</strong> ${usuario.matricula}</p><p><strong>Cargo:</strong> ${usuario.cargo}</p>`;
     }
 
-    if (folhas && folhas.length > 0) {
-        const folha = folhas[folhas.length - 1];
+    // Busca todas as folhas do servidor
+    const { data: folhas } = await _supabase.from('folhas').select('*').eq('funcionario_id', usuarioID).order('mes_referencia', { ascending: false });
+
+    if (!folhas || folhas.length === 0) {
+        corpo.innerHTML = '<tr><td colspan="4" style="text-align:center;">Nenhuma folha encontrada.</td></tr>';
+        return;
+    }
+
+    // Preenche o Select apenas se estiver vazio (na primeira carga)
+    if (selectMes.options.length === 0) {
+        folhas.forEach(f => {
+            const opt = document.createElement('option');
+            opt.value = f.mes_referencia;
+            opt.textContent = f.mes_referencia;
+            selectMes.appendChild(opt);
+        });
+    }
+
+    // Pega a folha correspondente ao mês selecionado
+    const mesSelecionado = selectMes.value;
+    const folha = folhas.find(f => f.mes_referencia === mesSelecionado) || folhas[0];
+
+    if (folha) {
         document.getElementById('ref-mes').textContent = folha.mes_referencia;
         corpo.innerHTML = `
             <tr><td>Salário Base</td><td>${folha.horas_normais}h</td><td>R$ ${folha.ganho_normal}</td><td>-</td></tr>
@@ -271,7 +293,6 @@ async function excluirFolha(id) {
 
 // INICIALIZAÇÃO
 document.addEventListener('DOMContentLoaded', async () => {
-    // Carregamento inteligente por página
     if (document.getElementById('form-login')) {
         document.getElementById('form-login').addEventListener('submit', realizarLogin);
     }
