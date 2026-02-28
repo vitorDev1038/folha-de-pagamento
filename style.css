@@ -1,0 +1,369 @@
+/* Configurações gerais para tirar as margens padrão do navegador */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f4f8; /* Um cinza azulado bem suave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header h2 {
+    color: #1a365d; /* Azul escuro corporativo */
+    margin-bottom: 5px;
+}
+
+.login-header p {
+    color: #718096;
+    font-size: 14px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4a5568;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.input-group input, 
+.input-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus, 
+.input-group select:focus {
+    border-color: #3182ce; /* Azul claro ao clicar no campo */
+}
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #2b6cb0;
+}
+
+.login-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #a0aec0;
+}
+
+/* --- ESTILOS DO PAINEL DO RH E FUNCIONÁRIO --- */
+
+.dashboard-body {
+    display: block; /* Tira o centralizado do login */
+    height: auto;
+}
+
+.navbar {
+    background-color: #1a365d;
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-sair {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #e53e3e;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.btn-sair:hover {
+    background-color: #c53030;
+}
+
+.dashboard-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide a tela em duas colunas */
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+    color: #2d3748;
+    margin-bottom: 5px;
+    border-bottom: 2px solid #edf2f7;
+    padding-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: #718096;
+    margin-bottom: 20px;
+}
+
+.linha-dupla {
+    display: flex;
+    gap: 15px;
+}
+
+.linha-dupla .input-group {
+    flex: 1; /* Faz os campos dividirem o espaço igualmente */
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: #38a169; /* Verde para salvar/confirmar */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #2f855a;
+}
+
+/* Responsividade: Se a tela for pequena (celular), fica uma coluna só */
+@media (max-width: 768px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- ESTILOS DO HOLERITE --- */
+
+.holerite-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.holerite-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.info-servidor {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+}
+
+.tabela-pagamento {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.tabela-pagamento th {
+    background-color: #edf2f7;
+    text-align: left;
+    padding: 12px;
+    color: #4a5568;
+}
+
+.tabela-pagamento td {
+    padding: 12px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.linha-total {
+    font-weight: bold;
+    background-color: #f7fafc;
+}
+
+.valor-positivo { color: #2f855a; }
+.valor-negativo { color: #c53030; }
+
+.total-liquido {
+    background-color: #1a365d;
+    color: white;
+    padding: 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn-imprimir {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background: #718096;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-imprimir:hover { background: #4a5568; }
+
+/* Esconde o botão de imprimir na hora da impressão real */
+@media print {
+    .btn-imprimir, .navbar, .btn-sair {
+        display: none;
+    }
+}
+
+/* --- ESTILO DO SELETOR DE MESES NO HOLERITE --- */
+
+#escolher-mes-holerite {
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+    background-color: #ffffff;
+    border: 2px solid #3182ce; /* Azul padrão do sistema */
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 10px;
+}
+
+#escolher-mes-holerite:hover {
+    border-color: #2b6cb0;
+    background-color: #f7fafc;
+}
+
+#escolher-mes-holerite:focus {
+    border-color: #2b6cb0;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+/* Ajuste no cabeçalho para alinhar o seletor e o título */
+.holerite-header {
+    display: flex;
+    flex-direction: column; /* Coloca um embaixo do outro em telas menores */
+    align-items: flex-start;
+    gap: 10px;
+}
+
+@media (min-width: 600px) {
+    .holerite-header {
+        flex-direction: row; /* Volta ao normal em telas grandes */
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+/* --- SELO DE AUTENTICIDADE E ASSINATURA --- */
+
+.footer-autenticidade {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed #cbd5e0;
+    padding-top: 20px;
+}
+
+.selo-digital {
+    border: 3px double #2f855a; /* Verde escuro oficial */
+    color: #2f855a;
+    padding: 10px;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    transform: rotate(-15deg); /* Efeito de carimbo inclinado */
+    opacity: 0.8;
+    user-select: none;
+}
+
+.assinatura-digital {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.linha-assinatura {
+    border-top: 1px solid #2d3748;
+    width: 250px;
+    margin: 10px auto 5px;
+}
+
+.token-autenticacao {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    color: #718096;
+}
+
+/* Esconder o botão de imprimir na hora da impressão real */
+@media print {
+    .btn-imprimir, .btn-sair, #escolher-mes-holerite {
+        display: none !important;
+    }
+    .holerite-container {
+        box-shadow: none;
+        margin: 0;
+    }
+}

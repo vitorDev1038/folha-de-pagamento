@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Portal da Folha de Pagamento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-header">
+            <h2>Prefeitura Municipal</h2>
+            <p>Sistema de Folha de Pagamento</p>
+        </div>
+
+        <form class="login-form" id="form-login">
+            <div class="input-group">
+                <label for="tipo-acesso">Tipo de Acesso</label>
+                <select id="tipo-acesso" name="tipo-acesso">
+                    <option value="funcionario">Funcionário (Matrícula)</option>
+                    <option value="rh">Recursos Humanos (E-mail)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="identificacao">Matrícula ou E-mail</label>
+                <input type="text" id="identificacao" placeholder="Ex: 12345 ou vitor.s.silva@..." required>
+            </div>
+
+            <div class="input-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" placeholder="Digite sua senha" required>
+            </div>
+
+            <button type="submit" class="btn-login">Entrar no Sistema</button>
+        </form>
+
+        <div class="login-footer">
+            <p>Esqueceu a senha? Procure o RH.</p>
+        </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="script.js"></script>
+</body>
+</html>

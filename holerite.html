@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Contracheque - Portal do Servidor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+    <nav class="navbar">
+        <h2>Portal do Servidor - Resende</h2>
+        <a href="login.html" class="btn-sair">Sair</a>
+    </nav>
+
+    <div class="holerite-container">
+        <div class="card">
+            <div class="holerite-header">
+                <h3>Demonstrativo de Pagamento</h3>
+                <select id="escolher-mes-holerite" onchange="preencherHoleriteReal()">
+                </select>
+                <p>Mês: <strong id="ref-mes">---</strong></p>
+            </div>
+
+            <div class="info-servidor" id="dados-servidor">
+                Carregando dados...
+            </div>
+
+            <table class="tabela-pagamento">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Referência</th>
+                        <th>Vencimentos</th>
+                        <th>Descontos</th>
+                    </tr>
+                </thead>
+                <tbody id="corpo-tabela">
+                    </tbody>
+            </table>
+
+            <div class="total-liquido">
+                <span>VALOR LÍQUIDO A RECEBER:</span>
+                <span class="valor-final" id="total-liquido">R$ 0,00</span>
+            </div>
+            <div class="footer-autenticidade">
+    <div class="selo-digital">
+        <span>AUTÊNTICO</span>
+        <span style="font-size: 8px;">SISTEMA RH</span>
+        <span id="ano-selo">2026</span>
+    </div>
+
+    <div class="assinatura-digital">
+        <div class="linha-assinatura"></div>
+        <p><strong>Secretaria Municipal de Administração</strong></p>
+        <p class="token-autenticacao">Autenticação: <span id="codigo-token">XXXX-XXXX-XXXX</span></p>
+    </div>
+</div>
+
+            <button onclick="window.print()" class="btn-imprimir">Imprimir Contracheque</button>
+        </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="script.js"></script>
+</body>
+</html>
