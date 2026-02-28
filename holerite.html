@@ -10,7 +10,7 @@
 
     <nav class="navbar">
         <h2>Portal do Servidor - Resende</h2>
-        <a href="login.html" class="btn-sair">Sair</a>
+        <a href="/" class="btn-sair">Sair</a>
     </nav>
 
     <div class="holerite-container">
@@ -43,25 +43,37 @@
                 <span>VALOR LÍQUIDO A RECEBER:</span>
                 <span class="valor-final" id="total-liquido">R$ 0,00</span>
             </div>
-            <div class="footer-autenticidade">
-    <div class="selo-digital">
-        <span>AUTÊNTICO</span>
-        <span style="font-size: 8px;">SISTEMA RH</span>
-        <span id="ano-selo">2026</span>
-    </div>
 
-    <div class="assinatura-digital">
-        <div class="linha-assinatura"></div>
-        <p><strong>Secretaria Municipal de Administração</strong></p>
-        <p class="token-autenticacao">Autenticação: <span id="codigo-token">XXXX-XXXX-XXXX</span></p>
-    </div>
-</div>
+            <div class="footer-autenticidade">
+                <div class="selo-digital">
+                    <span>AUTÊNTICO</span>
+                    <span style="font-size: 8px;">SISTEMA RH</span>
+                    <span id="ano-selo">2026</span>
+                </div>
+
+                <div class="assinatura-digital">
+                    <div class="linha-assinatura"></div>
+                    <p><strong>Secretaria Municipal de Administração</strong></p>
+                    <p class="token-autenticacao">Autenticação: <span id="codigo-token">GERANDO...</span></p>
+                </div>
+            </div>
 
             <button onclick="window.print()" class="btn-imprimir">Imprimir Contracheque</button>
         </div>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+
+    <script>
+        // Pequeno script para gerar o Token visual de autenticidade
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = Math.random().toString(36).toUpperCase().substring(2, 6) + "-" + 
+                          Math.random().toString(36).toUpperCase().substring(2, 6) + "-" + 
+                          Math.random().toString(36).toUpperCase().substring(2, 6);
+            const el = document.getElementById('codigo-token');
+            if(el) el.textContent = token;
+        });
+    </script>
 </body>
 </html>
