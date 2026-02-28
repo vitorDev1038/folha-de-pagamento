@@ -4,7 +4,6 @@
   "rewrites": [
     { "source": "/rh", "destination": "/rh.html" },
     { "source": "/holerite", "destination": "/holerite.html" },
-    { "source": "/login", "destination": "/index.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/login", "destination": "/index.html" }
   ]
 }
