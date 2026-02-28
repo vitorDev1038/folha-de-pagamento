@@ -6,55 +6,26 @@
     <title>Painel do RH - Prefeitura</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Estilo específico para o Header com Brasão */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #004a99; /* Azul oficial baseado no brasão */
+            background-color: #004a99;
             padding: 10px 25px;
             color: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .brasao-nav {
-            height: 65px; /* Tamanho proporcional para o menu */
-            width: auto;
-            filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.5));
-        }
-
-        .nav-titles h2 {
-            margin: 0;
-            font-size: 1.2rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .nav-titles span {
-            font-size: 0.85rem;
-            opacity: 0.9;
-            display: block;
-        }
-
-        .btn-sair {
-            background: #c53030;
-            color: white;
-            text-decoration: none;
-            padding: 8px 18px;
-            border-radius: 4px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .btn-sair:hover {
-            background: #9b2c2c;
-        }
+        .nav-brand { display: flex; align-items: center; gap: 15px; }
+        .brasao-nav { height: 65px; width: auto; filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.5)); }
+        .nav-titles h2 { margin: 0; font-size: 1.2rem; letter-spacing: 0.5px; text-transform: uppercase; }
+        .nav-titles span { font-size: 0.85rem; opacity: 0.9; display: block; }
+        .btn-sair { background: #c53030; color: white; text-decoration: none; padding: 8px 18px; border-radius: 4px; font-weight: bold; transition: 0.3s; }
+        .btn-sair:hover { background: #9b2c2c; }
+        
+        /* Estilo para o gerador de senha */
+        .senha-container { display: flex; gap: 5px; }
+        .btn-gerar-senha { background: #4a5568; color: white; border: none; padding: 0 10px; border-radius: 4px; cursor: pointer; font-size: 1.2rem; }
+        .btn-gerar-senha:hover { background: #2d3748; }
     </style>
 </head>
 <body class="dashboard-body">
@@ -77,7 +48,13 @@
                 <div class="input-group"><label>Nome Completo</label><input type="text" id="nome-completo" required></div>
                 <div class="input-group"><label>Cargo</label><input type="text" id="cargo" required></div>
                 <div class="input-group"><label>Valor Hora (R$)</label><input type="number" id="salario-hora" step="0.01" required></div>
-                <div class="input-group"><label>Senha de Acesso</label><input type="password" id="senha-cadastro" required></div>
+                <div class="input-group">
+                    <label>Senha de Acesso</label>
+                    <div class="senha-container">
+                        <input type="text" id="senha-cadastro" required placeholder="Digite ou gere uma senha">
+                        <button type="button" class="btn-gerar-senha" onclick="preencherSenhaAleatoria()" title="Gerar Senha Aleatória">⚡</button>
+                    </div>
+                </div>
                 <button type="submit" class="btn-primary">Salvar Cadastro</button>
             </form>
         </div>
@@ -127,10 +104,6 @@
 
                     <button onclick="exportarRelatorioCSV()" style="background: #2f855a; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">
                         📥 Excel
-                    </button>
-
-                    <button onclick="exportarRelatorioPDF()" style="background: #c53030; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                        📄 Gerar PDF
                     </button>
                 </div>
             </div>

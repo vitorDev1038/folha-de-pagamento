@@ -16,6 +16,16 @@ function gerarEmail(nomeCompleto) {
     return `${primeiroNome}.${iniciaisMeio}${ultimoNome}@prefeituraresende.com`;
 }
 
+// 1.1 GERADOR DE SENHA ALEATÓRIA
+function gerarSenhaAleatoria(tamanho = 8) {
+    const caracteres = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789@#%';
+    let senha = '';
+    for (let i = 0; i < tamanho; i++) {
+        senha += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+    return senha;
+}
+
 // 2. FUNÇÕES DO BANCO DE DADOS
 async function obterFuncionarios() {
     const { data, error } = await _supabase.from('funcionarios').select('*').order('nome', { ascending: true });
@@ -226,13 +236,11 @@ async function preencherHoleriteReal() {
     
     if (!usuarioID || !corpo || !selectMes) return;
 
-    // Busca dados do funcionário
     const { data: usuario } = await _supabase.from('funcionarios').select('*').eq('id', usuarioID).single();
     if (usuario) {
         document.getElementById('dados-servidor').innerHTML = `<p><strong>Nome:</strong> ${usuario.nome} | <strong>Matrícula:</strong> ${usuario.matricula}</p><p><strong>Cargo:</strong> ${usuario.cargo}</p>`;
     }
 
-    // Busca todas as folhas do servidor
     const { data: folhas } = await _supabase.from('folhas').select('*').eq('funcionario_id', usuarioID).order('mes_referencia', { ascending: false });
 
     if (!folhas || folhas.length === 0) {
@@ -240,7 +248,6 @@ async function preencherHoleriteReal() {
         return;
     }
 
-    // Preenche o Select apenas se estiver vazio (na primeira carga)
     if (selectMes.options.length === 0) {
         folhas.forEach(f => {
             const opt = document.createElement('option');
@@ -250,7 +257,6 @@ async function preencherHoleriteReal() {
         });
     }
 
-    // Pega a folha correspondente ao mês selecionado
     const mesSelecionado = selectMes.value;
     const folha = folhas.find(f => f.mes_referencia === mesSelecionado) || folhas[0];
 
@@ -277,6 +283,11 @@ async function exportarRelatorioCSV() {
 }
 
 // 8. AUXILIARES
+function preencherSenhaAleatoria() {
+    const campoSenha = document.getElementById('senha-cadastro');
+    if (campoSenha) campoSenha.value = gerarSenhaAleatoria(8);
+}
+
 async function atualizarSelectFuncionarios() {
     const select = document.getElementById('selecionar-funcionario');
     if (!select) return;
