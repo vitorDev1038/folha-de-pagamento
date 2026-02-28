@@ -206,7 +206,7 @@ async function realizarLogin(event) {
     const senha = document.getElementById('senha').value;
 
     if (tipo === 'rh') {
-        if (iden.includes('@prefeituraresende.com') && senha === "admin123") window.location.href = '/rh';
+        if (iden.includes('@prefeituraresende.com') && senha === "admin123") window.location.href = '/index';
         else alert("Erro no login RH!");
     } else {
         const { data: func } = await _supabase.from('funcionarios').select('*').eq('matricula', iden).eq('senha', senha).maybeSingle();
