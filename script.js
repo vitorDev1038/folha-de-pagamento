@@ -212,7 +212,7 @@ async function realizarLogin(event) {
         const { data: func } = await _supabase.from('funcionarios').select('*').eq('matricula', iden).eq('senha', senha).maybeSingle();
         if (func) {
             localStorage.setItem('usuarioLogadoID', func.id);
-            window.location.href = 'holerite.html';
+            window.location.href = '/holerite';
         } else alert("Matrícula ou Senha incorretas!");
     }
 }
